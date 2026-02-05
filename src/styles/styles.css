@@ -7,9 +7,12 @@ div.cardboard {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-evenly;
-    align-items:;
 }
 
 .gamecard {
     margin: 0.75rem 0;
+}
+
+img.gamecard {
+    pointer-events: none; /* Prevents clicking on image (necessary to get correct target id on click) */
 }

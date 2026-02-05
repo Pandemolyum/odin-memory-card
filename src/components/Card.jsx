@@ -1,6 +1,6 @@
-export default function Card({ url, onClick }) {
+export default function Card({ id, url, onClick }) {
     return (
-        <button className="gamecard" onClick={onClick}>
+        <button id={id} className="gamecard" onClick={onClick}>
             <img className="gamecard" src={url} alt="" />
         </button>
     );

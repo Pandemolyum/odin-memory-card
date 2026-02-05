@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 
 export default function CardBoard({ totalCards, onClick }) {
     const [imageUrls, setImageUrls] = useState(null);
+    const uidRegex = new RegExp(/([^/.]+)(?=.[^/.]*$)/); // Matches everything between the last "/" character and the last "." character.
 
     useEffect(() => {
         let ignore = false;
@@ -12,12 +13,16 @@ export default function CardBoard({ totalCards, onClick }) {
         return () => (ignore = true);
     }, [totalCards]);
 
-    console.log("🚀 ~ CardBoard ~ imageUrls:", imageUrls);
     return (
         <div className="cardboard">
             {imageUrls !== null &&
                 imageUrls.map((url, i) => (
-                    <Card key={i} url={url} onClick={onClick} />
+                    <Card
+                        key={i}
+                        id={url.match(uidRegex)[0]}
+                        url={url}
+                        onClick={onClick}
+                    />
                 ))}
         </div>
     );
