@@ -1,0 +1,15 @@
+div.hflex {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+div.cardboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items:;
+}
+
+.gamecard {
+    margin: 0.75rem 0;
+}
