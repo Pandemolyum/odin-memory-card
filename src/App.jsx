@@ -48,7 +48,7 @@ function App() {
         setCards(cards.toSorted(() => Math.random() - 0.5));
     };
 
-    // Generate the Card components from the data
+    // Generate the Card components
     const cardComponents = cards.map((card) => (
         <Card key={card.id} id={card.id} url={card.url} onClick={onCardClick} />
     ));
