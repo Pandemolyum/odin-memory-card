@@ -37,11 +37,20 @@ export default async function fetchImages(totalCards) {
     const prefixUrl = baseUrl + posterSize;
 
     const collection = await fetchImageCollection();
+
+    // Randomly select a poster in the collection and push it to the imageUrls array
+    const collectionLength = collection.posters.length;
+    const randomNumbers = [];
     let imageUrls = [];
     let i;
     for (i = 0; i < totalCards; i++) {
-        imageUrls.push(prefixUrl + collection.posters[i].file_path);
+        let randomNumber = Math.floor(Math.random() * collectionLength);
+        while (randomNumbers.includes(randomNumber)) {
+            randomNumber = Math.floor(Math.random() * collectionLength);
+        }
+        imageUrls.push(prefixUrl + collection.posters[randomNumber].file_path);
+        randomNumbers.push(randomNumber);
     }
 
-    return { urls: imageUrls, maxNum: collection.posters.length };
+    return { urls: imageUrls, maxNum: collectionLength };
 }

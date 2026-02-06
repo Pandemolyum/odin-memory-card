@@ -77,6 +77,10 @@ function App() {
     return (
         <>
             <h1>Dune Memory Game</h1>
+            <p>
+                Click cards to score as many points as you can. Clicking the
+                same card twice resets the score to 0.
+            </p>
             <div className="hflex">
                 <Scoreboard currScore={currScore} highScore={highScore} />
                 <div className="vflex">
