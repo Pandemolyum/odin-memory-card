@@ -18,6 +18,11 @@ function App() {
     const [maxCards, setMaxCards] = useState(20);
     const minCards = 1;
 
+    // Change tab title
+    useEffect(() => {
+        document.title = "Dune Memory Game";
+    }, []);
+
     // Fetches cards from the database using an API and creates card objects
     useEffect(() => {
         let ignore = false;
