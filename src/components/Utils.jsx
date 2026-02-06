@@ -43,5 +43,5 @@ export default async function fetchImages(totalCards) {
         imageUrls.push(prefixUrl + collection.posters[i].file_path);
     }
 
-    return imageUrls;
+    return { urls: imageUrls, maxNum: collection.posters.length };
 }

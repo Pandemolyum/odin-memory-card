@@ -1,6 +1,12 @@
 div.hflex {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+}
+
+div.vflex {
+    display: flex;
+    flex-direction: column;
 }
 
 div.cardboard {
@@ -15,4 +21,8 @@ div.cardboard {
 
 img.gamecard {
     pointer-events: none; /* Prevents clicking on image (necessary to get correct target id on click) */
+}
+
+label {
+    margin-right: 0.5rem;
 }

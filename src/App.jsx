@@ -3,29 +3,34 @@ import "./App.css";
 import fetchImages from "./components/Utils.jsx";
 import Card from "./components/Card.jsx";
 import CardBoard from "./components/CardBoard.jsx";
-
-// Game options
-const totalCards = 20;
+import Scoreboard from "./components/Scoreboard.jsx";
 
 // Game logic
 let currScore = 0;
 let highScore = 0;
-const clickedCards = []; // Stores card keys
+const clickedCards = []; // Stores clicked card keys
 
 function App() {
     const [cards, setCards] = useState([]);
 
+    // Game options
+    const [totalCards, setTotalCards] = useState(20);
+    const [maxCards, setMaxCards] = useState(20);
+    const minCards = 1;
+
     // Fetches cards from the database using an API and creates card objects
     useEffect(() => {
         let ignore = false;
-        fetchImages(totalCards).then((urls) => {
+        fetchImages(totalCards).then((res) => {
             if (!ignore) {
                 const uidRegex = new RegExp(/([^/.]+)(?=.[^/.]*$)/); // Matches everything between the last "/" character and the last "." character.
-                const initialCards = urls.map((url) => ({
+                const initialCards = res.urls.map((url) => ({
                     id: url.match(uidRegex)[0],
                     url: url,
                 }));
                 setCards(initialCards);
+                setMaxCards(res.maxNum);
+                currScore = 0;
             }
         });
 
@@ -48,6 +53,17 @@ function App() {
         setCards(cards.toSorted(() => Math.random() - 0.5));
     };
 
+    const handleTotalCardsChange = (e) => {
+        const currValue = Math.floor(e.target.value);
+        if (currValue < minCards) {
+            setTotalCards(5);
+        } else if (currValue > maxCards) {
+            setTotalCards(maxCards);
+        } else {
+            setTotalCards(currValue);
+        }
+    };
+
     // Generate the Card components
     const cardComponents = cards.map((card) => (
         <Card key={card.id} id={card.id} url={card.url} onClick={onCardClick} />
@@ -57,8 +73,22 @@ function App() {
         <>
             <h1>Dune Memory Game</h1>
             <div className="hflex">
-                <h3>Scoreboard</h3>
-                <h3>Options</h3>
+                <Scoreboard currScore={currScore} highScore={highScore} />
+                <div className="vflex">
+                    <div className="setting">
+                        <label htmlFor="totalCards">
+                            Total Cards ({minCards}-{maxCards}):
+                        </label>
+                        <input
+                            id="totalCards"
+                            type="number"
+                            min={minCards}
+                            max={maxCards}
+                            value={totalCards}
+                            onChange={handleTotalCardsChange}
+                        />
+                    </div>
+                </div>
             </div>
             <CardBoard cards={cardComponents} />
         </>
